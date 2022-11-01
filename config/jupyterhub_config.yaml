@@ -1,0 +1,91 @@
+# This file can update the JupyterHub Helm chart's default configuration values.
+#
+# For reference see the configuration reference and default values, but make
+# sure to refer to the Helm chart version of interest to you!
+#
+# Introduction to YAML:     https://www.youtube.com/watch?v=cdLNKUoMc6c
+# Chart config reference:   https://zero-to-jupyterhub.readthedocs.io/en/stable/resources/reference.html
+# Chart default values:     https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/HEAD/jupyterhub/values.yaml
+# Available chart versions: https://jupyterhub.github.io/helm-chart/
+
+singleuser:
+  cmd: null # Don't override the Dockerfile's cmd
+  image:
+    name: jupyterhub-user
+  defaultUrl: "/lab"
+  extraEnv:
+    GRANT_SUDO: "yes"
+    OS_KEYPAIR_PRIVATE_KEY: "/work/.ssh/id_rsa"
+    OS_KEYPAIR_PUBLIC_KEY: "/work/.ssh/id_rsa.pub"
+    CHOWN_EXTRA: "/work"
+    CHOWN_EXTRA_OPTS: "-R"
+    JUPYTER_ENABLE_LAB: "yes" # TODO no idea if this is needed with defaultURL
+    #NOTEBOOK_ARGS: "--allow-root"
+    #uid: 0
+  memory:
+    limit: .5G
+    guarantee: .5G
+  cpu:
+    limit: .5
+    guarantee: .5
+  storage:
+    capacity: 512M
+  extraFiles:
+    jupyter_notebook_config.json:
+      mountPath: /etc/jupyter/jupyter_notebook_config.json
+      data:
+        MappingKernelManager:
+          cull_idle_timeout: 3600
+          cull_interval: 300
+          cull_connected: false
+
+hub:
+  image:
+    name: jupyterhub
+  config:
+    JupyterHub:
+      allow_named_servers: yes
+      authenticator_class: "chameleon"
+      spawner_class: "chameleon"
+      cleanup_servers: no
+      cleanup_proxy: no
+      cookie_max_age_days: 30
+    ChameleonSpawner:
+      env_keep:
+        - JUPYTERHUB_PUBLIC_URL
+        - TROVI_URL
+      work_dir: "/work"
+      #notebook_dir: "/work"
+      http_timeout: 600
+    ChameleonKeycloakAuthenticator:
+      login_service: "Chameleon"
+    GenericOAuthenticator:
+      login_service: "Chameleon"
+      username_key: "preferred_username"
+
+  extraConfig:
+    chameleonConfig.py: |
+      import os
+
+      # Configure handlers
+      from jupyterhub_chameleon.handler import AccessTokenHandler
+      from jupyterhub_chameleon.handler import UserRedirectExperimentHandler
+      c.JupyterHub.extra_handlers = [
+        (r"/import", UserRedirectExperimentHandler),
+        (r"/api/tokens", AccessTokenHandler),
+      ]
+
+      #c.JupyterHub.cookie_secret_file = os.path.join(data_dir, "jupyterhub_cookie_secret")
+      #c.JupyterHub.db_url = "mysql+mysqldb://{user}:{password}@{host}/{db}".format(
+      #    host=os.environ["MYSQL_HOST"],
+      #    user=os.environ["MYSQL_USER"],
+      #    password=os.environ["MYSQL_PASSWORD"],
+      #    db=os.environ["MYSQL_DATABASE"],
+      #)
+
+cull:
+  enabled: true
+
+scheduling:
+  userScheduler:
+    enabled: false
