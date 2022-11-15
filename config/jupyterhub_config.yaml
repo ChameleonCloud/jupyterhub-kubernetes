@@ -19,17 +19,23 @@ singleuser:
     OS_KEYPAIR_PUBLIC_KEY: "/work/.ssh/id_rsa.pub"
     CHOWN_EXTRA: "/work"
     CHOWN_EXTRA_OPTS: "-R"
-    JUPYTER_ENABLE_LAB: "yes" # TODO no idea if this is needed with defaultURL
-    #NOTEBOOK_ARGS: "--allow-root"
-    #uid: 0
+    ARTIFACT_SHARING_OS_AUTH_TYPE: "v3password"
+    ARTIFACT_SHARING_OS_USERNAME: "trovi"
+    ARTIFACT_SHARING_OS_USER_DOMAIN_NAME: "default"
+    ARTIFACT_SHARING_OS_PROJECT_NAME: "service"
+    ARTIFACT_SHARING_OS_PROJECT_DOMAIN_NAME: "default"
+    #NOTEBOOK_ARGS: "--user root"
+  uid: 0
   memory:
     limit: .5G
     guarantee: .5G
   cpu:
     limit: .5
     guarantee: .5
+  fsGid: 100
   storage:
     capacity: 512M
+    homeMountPath: /work
   extraFiles:
     jupyter_notebook_config.json:
       mountPath: /etc/jupyter/jupyter_notebook_config.json
@@ -54,9 +60,14 @@ hub:
       env_keep:
         - JUPYTERHUB_PUBLIC_URL
         - TROVI_URL
+        - ARTIFACT_SHARING_OS_AUTH_TYPE
+        - ARTIFACT_SHARING_OS_USERNAME
+        - ARTIFACT_SHARING_OS_USER_DOMAIN_NAME
+        - ARTIFACT_SHARING_OS_PROJECT_NAME
+        - ARTIFACT_SHARING_OS_PROJECT_DOMAIN_NAME
       work_dir: "/work"
-      #notebook_dir: "/work"
-      http_timeout: 600
+      notebook_dir: "/work"
+      http_timeout: 300
     ChameleonKeycloakAuthenticator:
       login_service: "Chameleon"
     GenericOAuthenticator:
@@ -75,6 +86,8 @@ hub:
         (r"/api/tokens", AccessTokenHandler),
       ]
 
+      get_config("custom.")
+
       #c.JupyterHub.cookie_secret_file = os.path.join(data_dir, "jupyterhub_cookie_secret")
       #c.JupyterHub.db_url = "mysql+mysqldb://{user}:{password}@{host}/{db}".format(
       #    host=os.environ["MYSQL_HOST"],
@@ -82,7 +95,6 @@ hub:
       #    password=os.environ["MYSQL_PASSWORD"],
       #    db=os.environ["MYSQL_DATABASE"],
       #)
-
 cull:
   enabled: true
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source ./secrets.env
-
 helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
 helm repo update
 
@@ -22,4 +20,4 @@ open http://localhost
 
 printf "Following hub logs, ^-c at any time\n"
 
-kubectl -n jupyter logs -l component=hub --since=1h -f
+./logs.sh
