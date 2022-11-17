@@ -21,5 +21,7 @@ hub:
       authorize_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
       token_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
       userdata_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
+  extraEnv:
+    TROVI_URL: "https://trovi-dev.chameleoncloud.org"
 debug:
   enabled: true

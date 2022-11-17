@@ -59,12 +59,12 @@ hub:
     ChameleonSpawner:
       env_keep:
         - JUPYTERHUB_PUBLIC_URL
-        - TROVI_URL
         - ARTIFACT_SHARING_OS_AUTH_TYPE
         - ARTIFACT_SHARING_OS_USERNAME
         - ARTIFACT_SHARING_OS_USER_DOMAIN_NAME
         - ARTIFACT_SHARING_OS_PROJECT_NAME
         - ARTIFACT_SHARING_OS_PROJECT_DOMAIN_NAME
+        - TROVI_URL
       work_dir: "/work"
       notebook_dir: "/work"
       http_timeout: 300
