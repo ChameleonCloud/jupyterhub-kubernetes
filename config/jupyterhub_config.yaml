@@ -24,7 +24,6 @@ singleuser:
     ARTIFACT_SHARING_OS_USER_DOMAIN_NAME: "default"
     ARTIFACT_SHARING_OS_PROJECT_NAME: "service"
     ARTIFACT_SHARING_OS_PROJECT_DOMAIN_NAME: "default"
-    #NOTEBOOK_ARGS: "--user root"
   uid: 0
   memory:
     limit: .5G
@@ -73,7 +72,6 @@ hub:
     GenericOAuthenticator:
       login_service: "Chameleon"
       username_key: "preferred_username"
-
   extraConfig:
     chameleonConfig.py: |
       import os
@@ -86,18 +84,15 @@ hub:
         (r"/api/tokens", AccessTokenHandler),
       ]
 
-      get_config("custom.")
-
-      #c.JupyterHub.cookie_secret_file = os.path.join(data_dir, "jupyterhub_cookie_secret")
-      #c.JupyterHub.db_url = "mysql+mysqldb://{user}:{password}@{host}/{db}".format(
-      #    host=os.environ["MYSQL_HOST"],
-      #    user=os.environ["MYSQL_USER"],
-      #    password=os.environ["MYSQL_PASSWORD"],
-      #    db=os.environ["MYSQL_DATABASE"],
-      #)
 cull:
   enabled: true
 
 scheduling:
   userScheduler:
     enabled: false
+
+proxy:
+  service:
+    nodePorts:
+      http: 30080
+      https: 30081
