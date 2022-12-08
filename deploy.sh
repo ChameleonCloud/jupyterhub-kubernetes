@@ -9,7 +9,7 @@ helm upgrade --cleanup-on-fail \
 	--create-namespace \
 	--version=2.0.0 \
 	--values ./config/jupyterhub_config.yaml \
-	--values ./config/jupyterhub_config_dev.yaml \
+	--values ./config/jupyterhub_config_local_dev.yaml \
 	--values ./config/jupyterhub_secrets.yaml
 
 printf "Waiting for hub to come up\n"

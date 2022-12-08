@@ -4,6 +4,8 @@ singleuser:
     tag: dev
     pullPolicy: "Never" # Uses docker image from local machine
 hub:
+  db:
+    type: sqlite-memory
   image:
     tag: "dev"
     pullPolicy: "Never" # Uses docker image from local machine

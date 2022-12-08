@@ -9,9 +9,10 @@
 # Available chart versions: https://jupyterhub.github.io/helm-chart/
 
 singleuser:
+  allowPrivilegeEscalation: yes
   cmd: null # Don't override the Dockerfile's cmd
   image:
-    name: jupyterhub-user
+    name: docker.chameleoncloud.org/jupyterhub-user
   defaultUrl: "/lab"
   extraEnv:
     GRANT_SUDO: "yes"
@@ -46,7 +47,10 @@ singleuser:
 
 hub:
   image:
-    name: jupyterhub
+    name: docker.chameleoncloud.org/jupyterhub
+  extraEnv:
+    # If a user is in this project, they are admin
+    OAUTH_ADMIN_PROJECT: "Chameleon"
   config:
     JupyterHub:
       allow_named_servers: yes
