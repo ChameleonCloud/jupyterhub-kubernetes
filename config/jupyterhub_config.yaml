@@ -30,8 +30,8 @@ singleuser:
     limit: .5G
     guarantee: .5G
   cpu:
-    limit: .5
-    guarantee: .5
+    limit: .49
+    guarantee: .49
   fsGid: 100
   storage:
     capacity: 512M
@@ -51,6 +51,7 @@ hub:
   extraEnv:
     # If a user is in this project, they are admin
     OAUTH_ADMIN_PROJECT: "Chameleon"
+    OAUTH_CLIENT_ID: "jupyterhub-prod"
   config:
     JupyterHub:
       allow_named_servers: yes
@@ -95,8 +96,3 @@ scheduling:
   userScheduler:
     enabled: false
 
-proxy:
-  service:
-    nodePorts:
-      http: 30080
-      https: 30081

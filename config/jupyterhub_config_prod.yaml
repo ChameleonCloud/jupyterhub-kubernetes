@@ -1,0 +1,38 @@
+singleuser:
+  image:
+    tag: "e2fc80e"
+    pullPolicy: "Always"
+    pullSecrets:
+      - name: image-pull-secret 
+  cloudMetadata:
+    blockWithIptables: false
+
+hub:
+  image:
+    tag: "a6e1f63"
+    pullPolicy: "Always"
+    pullSecrets:
+      - name: image-pull-secret
+  config:
+    ChameleonKeycloakAuthenticator:
+      keystone_auth_url: "https://chi.uc.chameleoncloud.org:5000/v3"
+      keystone_default_region_name: "CHI_UC"
+    GenericOAuthenticator:
+      oauth_callback_url: "https://dev.jupyter.chameleoncloud.org/hub/oauth_callback"
+      client_id: "jupyterhub-prod"
+      authorize_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
+      token_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
+      userdata_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
+  extraEnv:
+    TROVI_URL: "https://trovi.chameleoncloud.org"
+debug:
+  enabled: true
+proxy:
+  https:
+    enabled: true
+    hosts:
+      - dev.jupyter.chameleoncloud.org
+    letsencrypt:
+      contactEmail: markpowers@uchicago.edu
+  service:
+    loadBalancerIP: 35.222.2.114

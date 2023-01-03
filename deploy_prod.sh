@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+set -x
+
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+#gcloud auth login
+
+gcloud container clusters get-credentials jupyterhub --zone us-central1-c
+
 helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
 helm repo update
 
@@ -9,15 +18,6 @@ helm upgrade --cleanup-on-fail \
 	--create-namespace \
 	--version=2.0.0 \
 	--values ./config/jupyterhub_config.yaml \
-	--values ./config/jupyterhub_config_local_dev.yaml \
-	--values ./config/jupyterhub_secrets.yaml
+	--values ./config/jupyterhub_secrets.yaml \
+	--values ./config/jupyterhub_config_prod.yaml
 
-printf "Waiting for hub to come up\n"
-
-sleep 10
-
-open http://localhost
-
-printf "Following hub logs, ^-c at any time\n"
-
-./logs.sh
