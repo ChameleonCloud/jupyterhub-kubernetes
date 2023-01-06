@@ -3,6 +3,7 @@ singleuser:
   image:
     tag: dev
     pullPolicy: "Never" # Uses docker image from local machine
+
 hub:
   db:
     type: sqlite-memory
@@ -18,7 +19,7 @@ hub:
       keystone_auth_url: "https://dev.uc.chameleoncloud.org:5000/v3"
       keystone_default_region_name: "CHI_DEV_UC"
     GenericOAuthenticator:
-      oauth_callback_url: "http://localhost/hub/oauth_callback"
+      oauth_callback_url: "http://127.0.0.1:8080/hub/oauth_callback"
       client_id: "jupyterhub-local-dev"
       authorize_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
       token_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
