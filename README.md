@@ -6,12 +6,9 @@ environment.
 ## Installation
 
 1. Clone this repo
-2. Install https://helm.sh/
-3. Enable docker desktop's kubernetes cluster
-4. Build or pull Chameleon's notebook and hub images
-5. Run `./deploy.sh`
-
-## Development
-
-After building a new hub or notebook image, simply run `./deploy.sh` again to
-update the deployment.
+2. Install `kubectl` and https://helm.sh/
+3. Set up kubectl with your kubernetes cluster
+	1. For local dev, enable docker desktop's kubernetes cluster
+	2. Build or pull Chameleon's notebook and hub images
+4. Create `config/jupyterhub_secrets.yaml` from `config/jupyterhub_secrets_template.yaml`
+5. Run a deploy script. See `deploy_prod.sh` and `deploy_local.sh`.
