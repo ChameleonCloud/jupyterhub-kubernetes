@@ -1,6 +1,6 @@
 singleuser:
   image:
-    tag: "e2fc80e"
+    tag: "2eaa1e5"
     pullPolicy: "Always"
     pullSecrets:
       - name: image-pull-secret 
@@ -16,9 +16,9 @@ hub:
   config:
     ChameleonKeycloakAuthenticator:
       keystone_auth_url: "https://chi.uc.chameleoncloud.org:5000/v3"
-      keystone_default_region_name: "CHI_UC"
+      keystone_default_region_name: "CHI@UC"
     GenericOAuthenticator:
-      oauth_callback_url: "https://dev.jupyter.chameleoncloud.org/hub/oauth_callback"
+      oauth_callback_url: "https://jupyter.chameleoncloud.org/hub/oauth_callback"
       client_id: "jupyterhub-prod"
       authorize_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
       token_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
@@ -31,8 +31,37 @@ proxy:
   https:
     enabled: true
     hosts:
-      - dev.jupyter.chameleoncloud.org
-    letsencrypt:
-      contactEmail: markpowers@uchicago.edu
+      - jupyter.chameleoncloud.org
+    type: secret
+    secret:
+      name: jupyter-tls
+        #letsencrypt:
+        #contactEmail: markpowers@uchicago.edu
+        #acmeServer: https://acme-staging-v02.api.letsencrypt.org/directory
   service:
     loadBalancerIP: 35.222.2.114
+      #traefik:
+      #extraInitContainers:
+      # This startup delay can help the k8s container network interface setup
+      # network routing of traffic to the pod, which is essential for the ACME
+      # challenge submitted by Traefik on startup to acquire a TLS certificate.
+      #
+      # Sleeping for 7 seconds has been consistently sufficient to avoid issues
+      # in GKE when this workaround was explored initially for GKE.
+      #
+      #- name: startup-delay
+      #  image: busybox:stable
+      #  command: ["sh", "-c", "sleep 10"]
+
+#ingress:
+#  enabled: true 
+#  hosts: 
+#      - jupyter.chameleoncloud.org
+#  tls:
+#  - hosts:
+#      - jupyter.chameleoncloud.org
+#    secretName:  jupyterhub-tls
+#  annotations: 
+#    cert-manager.io/cluster-issuer: letsencrypt
+#    kubernetes.io/tls-acme: "true"
+
