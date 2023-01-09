@@ -52,6 +52,11 @@ proxy:
       #- name: startup-delay
       #  image: busybox:stable
       #  command: ["sh", "-c", "sleep 10"]
+scheduling:
+  podPriority:
+    enabled: true
+  userPlaceholder:
+    replicas: 2
 
 #ingress:
 #  enabled: true 

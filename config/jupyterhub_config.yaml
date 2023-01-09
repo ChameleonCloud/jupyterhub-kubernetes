@@ -27,8 +27,8 @@ singleuser:
     ARTIFACT_SHARING_OS_PROJECT_DOMAIN_NAME: "default"
   uid: 0
   memory:
-    limit: .5G
-    guarantee: .5G
+    limit: 1G
+    guarantee: 1G
   cpu:
     limit: .49
     guarantee: .49
