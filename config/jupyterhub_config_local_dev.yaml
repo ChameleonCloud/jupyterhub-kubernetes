@@ -3,6 +3,8 @@ singleuser:
   image:
     tag: dev
     pullPolicy: "Never" # Uses docker image from local machine
+  extraEnv:
+    JUPYTERHUB_PUBLIC_URL: http://127.0.0.1:8080
 
 hub:
   db:
@@ -26,5 +28,6 @@ hub:
       userdata_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
   extraEnv:
     TROVI_URL: "https://trovi-dev.chameleoncloud.org"
+    DEBUG: "true"
 debug:
   enabled: true
