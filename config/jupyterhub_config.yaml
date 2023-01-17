@@ -94,6 +94,12 @@ hub:
         (r"/api/trovi_metrics", TroviMetricHandler),
       ]
 
+      import importlib.resources
+      import jupyterhub_chameleon
+      c.JupyterHub.template_paths = [
+          "/usr/local/share/jupyterhub_chameleon/templates",
+      ]
+
 cull:
   enabled: true
 
