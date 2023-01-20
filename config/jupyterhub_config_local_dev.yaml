@@ -28,6 +28,9 @@ hub:
       userdata_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
   extraEnv:
     TROVI_URL: "https://trovi-dev.chameleoncloud.org"
+    KEYCLOAK_CLIENT_ID: "jupyterhub-local-dev"
+    KEYCLOAK_TOKEN_URL: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
+    OAUTH_CLIENT_ID: "jupyterhub-local-dev"
     DEBUG: "true"
 debug:
   enabled: true

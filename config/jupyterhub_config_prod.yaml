@@ -3,9 +3,11 @@ singleuser:
     tag: "2eaa1e5"
     pullPolicy: "Always"
     pullSecrets:
-      - name: image-pull-secret 
+      - name: image-pull-secret
   cloudMetadata:
     blockWithIptables: false
+  extraEnv:
+    JUPYTERHUB_PUBLIC_URL: https://jupyter.chameleoncloud.org
 
 hub:
   image:
@@ -25,6 +27,9 @@ hub:
       userdata_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
   extraEnv:
     TROVI_URL: "https://trovi.chameleoncloud.org"
+    KEYCLOAK_CLIENT_ID: "jupyterhub-prod"
+    KEYCLOAK_TOKEN_URL: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
+    OAUTH_CLIENT_ID: "jupyterhub-prod"
 debug:
   enabled: true
 proxy:

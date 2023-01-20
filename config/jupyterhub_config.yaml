@@ -51,7 +51,6 @@ hub:
   extraEnv:
     # If a user is in this project, they are admin
     OAUTH_ADMIN_PROJECT: "Chameleon"
-    OAUTH_CLIENT_ID: "jupyterhub-prod"
   config:
     JupyterHub:
       allow_named_servers: yes
