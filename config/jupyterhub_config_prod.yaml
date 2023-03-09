@@ -37,16 +37,12 @@ proxy:
     enabled: true
     hosts:
       - jupyter.chameleoncloud.org
-    type: secret
-    secret:
-      name: jupyter-tls
-        #letsencrypt:
-        #contactEmail: markpowers@uchicago.edu
-        #acmeServer: https://acme-staging-v02.api.letsencrypt.org/directory
+    letsencrypt:
+      contactEmail: contact@chameleoncloud.org
   service:
     loadBalancerIP: 35.222.2.114
-      #traefik:
-      #extraInitContainers:
+  traefik:
+    extraInitContainers:
       # This startup delay can help the k8s container network interface setup
       # network routing of traffic to the pod, which is essential for the ACME
       # challenge submitted by Traefik on startup to acquire a TLS certificate.
@@ -54,24 +50,11 @@ proxy:
       # Sleeping for 7 seconds has been consistently sufficient to avoid issues
       # in GKE when this workaround was explored initially for GKE.
       #
-      #- name: startup-delay
-      #  image: busybox:stable
-      #  command: ["sh", "-c", "sleep 10"]
+      - name: startup-delay
+        image: busybox:stable
+        command: ["sh", "-c", "sleep 20"]
 scheduling:
   podPriority:
     enabled: true
   userPlaceholder:
     replicas: 2
-
-#ingress:
-#  enabled: true 
-#  hosts: 
-#      - jupyter.chameleoncloud.org
-#  tls:
-#  - hosts:
-#      - jupyter.chameleoncloud.org
-#    secretName:  jupyterhub-tls
-#  annotations: 
-#    cert-manager.io/cluster-issuer: letsencrypt
-#    kubernetes.io/tls-acme: "true"
-

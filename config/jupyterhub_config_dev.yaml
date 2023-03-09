@@ -49,6 +49,7 @@ proxy:
       #
       # Sleeping for 7 seconds has been consistently sufficient to avoid issues
       # in GKE when this workaround was explored initially for GKE.
+      # https://github.com/jupyterhub/zero-to-jupyterhub-k8s/issues/2601#issuecomment-1127600794
       #
       - name: startup-delay
         image: busybox:stable
