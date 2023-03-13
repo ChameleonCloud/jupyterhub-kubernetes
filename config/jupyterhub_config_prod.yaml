@@ -1,6 +1,6 @@
 singleuser:
   image:
-    tag: "2eaa1e5"
+    tag: "66c699e"
     pullPolicy: "Always"
     pullSecrets:
       - name: image-pull-secret
@@ -11,7 +11,7 @@ singleuser:
 
 hub:
   image:
-    tag: "a6e1f63"
+    tag: "7d05ccc"
     pullPolicy: "Always"
     pullSecrets:
       - name: image-pull-secret
