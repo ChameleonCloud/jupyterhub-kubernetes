@@ -1,6 +1,6 @@
 singleuser:
   image:
-    tag: "66c699e"
+    tag: "sha-d2c0f8f"
     pullPolicy: "Always"
     pullSecrets:
       - name: image-pull-secret
