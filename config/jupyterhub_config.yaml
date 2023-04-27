@@ -12,7 +12,7 @@ singleuser:
   allowPrivilegeEscalation: yes
   cmd: null # Don't override the Dockerfile's cmd
   image:
-    name: docker.chameleoncloud.org/jupyterhub-user
+    name: ghcr.io/chameleoncloud/jupyterlab-chameleon
   defaultUrl: "/lab"
   extraEnv:
     GRANT_SUDO: "yes"
@@ -47,7 +47,7 @@ singleuser:
 
 hub:
   image:
-    name: docker.chameleoncloud.org/jupyterhub
+    name: ghcr.io/chameleoncloud/jupyterhub-chameleon
   extraEnv:
     # If a user is in this project, they are admin
     OAUTH_ADMIN_PROJECT: "Chameleon"
