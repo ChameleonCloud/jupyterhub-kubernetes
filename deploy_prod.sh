@@ -16,7 +16,7 @@ helm upgrade --cleanup-on-fail \
 	--install jupyter jupyterhub/jupyterhub \
 	--namespace jupyter \
 	--create-namespace \
-	--version=2.0.0 \
+	--version=3.2.0 \
 	--values ./config/jupyterhub_config.yaml \
 	--values ./config/jupyterhub_secrets.yaml \
 	--values ./config/jupyterhub_config_prod.yaml
