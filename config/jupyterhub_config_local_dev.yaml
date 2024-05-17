@@ -1,15 +1,32 @@
 # Values unique to testing on local dev
 singleuser:
+  memory:
+    limit: 4G
+    guarantee: 1G
+  cpu: # Generous values here for dev
+    limit: 4
+    guarantee: 2
   image:
+    name: jupyterlab-chameleon
     tag: dev
     pullPolicy: "Never" # Uses docker image from local machine
   extraEnv:
-    JUPYTERHUB_PUBLIC_URL: http://127.0.0.1:8080
+    JUPYTERHUB_PUBLIC_URL: http://jupyterhub.local:30080
+  storage: # This is supposed to mount the JL source in your server (not fully working w/ minikube).
+    extraVolumes:
+    - name: jupyterlab-chameleon
+      hostPath:
+        path: /jupyterlab_chameleon # Path to local jupyterlab-chameleon repo
+        type: Directory
+    extraVolumeMounts:
+    - name: jupyterlab-chameleon
+      mountPath: /jupyterlab_chameleon
 
 hub:
   db:
     type: sqlite-memory
   image:
+    name: jupyterhub-chameleon
     tag: "dev"
     pullPolicy: "Never" # Uses docker image from local machine
   config:
@@ -21,16 +38,27 @@ hub:
       keystone_auth_url: "https://dev.uc.chameleoncloud.org:5000/v3"
       keystone_default_region_name: "CHI_DEV_UC"
     GenericOAuthenticator:
-      oauth_callback_url: "http://127.0.0.1:8080/hub/oauth_callback"
+      oauth_callback_url: "http://jupyterhub.local:30080/hub/oauth_callback"
       client_id: "jupyterhub-local-dev"
-      authorize_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
-      token_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
-      userdata_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
+      client_secret: "jupyterhub-local-dev-secret"
+      authorize_url: "https://chameleon.local:8080/auth/realms/chameleon/protocol/openid-connect/auth"
+      token_url: "https://chameleon.local:8080/auth/realms/chameleon/protocol/openid-connect/token"
+      userdata_url: "https://chameleon.local:8080/auth/realms/chameleon/protocol/openid-connect/userinfo"
   extraEnv:
-    TROVI_URL: "https://trovi-dev.chameleoncloud.org"
+    TROVI_URL: "http://chameleon.local:8808"
     KEYCLOAK_CLIENT_ID: "jupyterhub-local-dev"
-    KEYCLOAK_TOKEN_URL: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
+    KEYCLOAK_TOKEN_URL: "https://chameleon.local:8080/auth/realms/chameleon/protocol/openid-connect/token"
     OAUTH_CLIENT_ID: "jupyterhub-local-dev"
     DEBUG: "true"
+    OAUTH_CLIENT_SECRET: "jupyterhub-local-dev-secret"
+    OAUTH2_TLS_VERIFY: "0" # OK since we control oauth server
+    OAUTH_TLS_VERIFY: "0"
+
+proxy:
+  service:
+    type: NodePort
+    nodePorts:
+      http: 30080
+
 debug:
   enabled: true

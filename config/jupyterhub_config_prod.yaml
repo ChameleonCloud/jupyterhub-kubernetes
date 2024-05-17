@@ -8,6 +8,12 @@ singleuser:
     blockWithIptables: false
   extraEnv:
     JUPYTERHUB_PUBLIC_URL: https://jupyter.chameleoncloud.org
+  memory:
+    limit: 1G
+    guarantee: 1G
+  cpu:
+    limit: .49
+    guarantee: .49
 
 hub:
   image:
