@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: volume-cleanup
+  namespace: jupyter
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: jupyter-cleanup-sa
+      containers:
+      - name: cleanup
+        image: mppowers/hammers:latest
+        command:
+          - /bin/sh
+          - -c
+          - cleanup_jupyter_volumes
+          - --dry-run
+        env:
+          - name: HAMMERS_PORTAL_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: jupyter-cleanup-secrets
+                key: portal-api-token
+          - name: HAMMERS_KEYCLOAK_URL
+            valueFrom:
+              configMapKeyRef:
+                name: jupyter-cleanup-config
+                key: keycloak-url
+          - name: HAMMERS_KEYCLOAK_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: jupyter-cleanup-config
+                key: client-id
+          - name: HAMMERS_KEYCLOAK_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: jupyter-cleanup-secrets
+                key: client-secret
+          - name: HAMMERS_KUBE_NAMESPACE
+            valueFrom:
+              configMapKeyRef:
+                name: jupyter-cleanup-config
+                key: kube-namespace
+
+

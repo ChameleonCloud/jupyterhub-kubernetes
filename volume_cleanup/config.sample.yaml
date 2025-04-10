@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jupyter-cleanup-config
+  namespace: jupyter
+data:
+  client-id: ""
+  kube-namespace: ""
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jupyter-cleanup-secrets
+  namespace: jupyter
+type: Opaque
+stringData:
+  portal-api-token: ""
+  client-secret: ""
