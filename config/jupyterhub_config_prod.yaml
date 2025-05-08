@@ -1,6 +1,6 @@
 singleuser:
   image:
-    tag: "sha-d2c0f8f"
+    tag: "sha-21cd5c6"
     pullPolicy: "Always"
     pullSecrets:
       - name: image-pull-secret
@@ -11,7 +11,7 @@ singleuser:
 
 hub:
   image:
-    tag: "7d05ccc"
+    tag: "sha-d2fb699"
     pullPolicy: "Always"
     pullSecrets:
       - name: image-pull-secret
@@ -25,6 +25,7 @@ hub:
       authorize_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
       token_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
       userdata_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
+      logout_redirect_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/logout"
   extraEnv:
     TROVI_URL: "https://trovi.chameleoncloud.org"
     KEYCLOAK_CLIENT_ID: "jupyterhub-prod"
@@ -32,29 +33,3 @@ hub:
     OAUTH_CLIENT_ID: "jupyterhub-prod"
 debug:
   enabled: true
-proxy:
-  https:
-    enabled: true
-    hosts:
-      - jupyter.chameleoncloud.org
-    letsencrypt:
-      contactEmail: contact@chameleoncloud.org
-  service:
-    loadBalancerIP: 35.222.2.114
-  traefik:
-    extraInitContainers:
-      # This startup delay can help the k8s container network interface setup
-      # network routing of traffic to the pod, which is essential for the ACME
-      # challenge submitted by Traefik on startup to acquire a TLS certificate.
-      #
-      # Sleeping for 7 seconds has been consistently sufficient to avoid issues
-      # in GKE when this workaround was explored initially for GKE.
-      #
-      - name: startup-delay
-        image: busybox:stable
-        command: ["sh", "-c", "sleep 20"]
-scheduling:
-  podPriority:
-    enabled: true
-  userPlaceholder:
-    replicas: 2
