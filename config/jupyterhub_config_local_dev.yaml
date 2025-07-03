@@ -4,7 +4,10 @@ singleuser:
     tag: dev
     pullPolicy: "Never" # Uses docker image from local machine
   extraEnv:
-    JUPYTERHUB_PUBLIC_URL: http://127.0.0.1:8080
+    JUPYTERHUB_PUBLIC_URL: http://localhost:8891/
+  storage:
+    dynamic:
+      storageClass: "hostpath"
 
 hub:
   db:
@@ -18,19 +21,25 @@ hub:
     Application:
       log_level: debug
     ChameleonKeycloakAuthenticator:
-      keystone_auth_url: "https://dev.uc.chameleoncloud.org:5000/v3"
-      keystone_default_region_name: "CHI_DEV_UC"
+      keystone_auth_url: "https://chi.uc.chameleoncloud.org:5000/v3"
+      keystone_default_region_name: "CHI@UC"
     GenericOAuthenticator:
-      oauth_callback_url: "http://127.0.0.1:8080/hub/oauth_callback"
+      oauth_callback_url: "http://localhost:8891/hub/oauth_callback"
       client_id: "jupyterhub-local-dev"
-      authorize_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
-      token_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
-      userdata_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
+      authorize_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
+      token_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
+      userdata_url: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/userinfo"
   extraEnv:
     TROVI_URL: "https://trovi-dev.chameleoncloud.org"
     KEYCLOAK_CLIENT_ID: "jupyterhub-local-dev"
-    KEYCLOAK_TOKEN_URL: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
+    KEYCLOAK_TOKEN_URL: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
     OAUTH_CLIENT_ID: "jupyterhub-local-dev"
     DEBUG: "true"
+  db:
+    pvc:
+      storageClassName: "hostpath"
+
 debug:
   enabled: true
+cull:
+  enabled: false

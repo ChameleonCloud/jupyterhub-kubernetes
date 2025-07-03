@@ -15,6 +15,9 @@ hub:
     pullPolicy: "Always"
     pullSecrets:
       - name: image-pull-secret
+  db:
+    pvc:
+      storageClassName: "cinder-csi"
   config:
     ChameleonKeycloakAuthenticator:
       keystone_auth_url: "https://chi.uc.chameleoncloud.org:5000/v3"

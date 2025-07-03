@@ -48,6 +48,7 @@ singleuser:
           cull_connected: false
   networkPolicy:
     enabled: false
+  startTimeout: 300
 
 hub:
   image:
@@ -55,11 +56,9 @@ hub:
   extraEnv:
     # If a user is in this project, they are admin
     OAUTH_ADMIN_PROJECT: "Chameleon"
+    JUPYTERHUB_ALLOW_TOKEN_IN_URL: "true"
   networkPolicy:
     enabled: false
-  db:
-    pvc:
-      storageClassName: "cinder-csi"
   config:
     JupyterHub:
       allow_named_servers: yes
@@ -77,9 +76,11 @@ hub:
         - ARTIFACT_SHARING_OS_PROJECT_NAME
         - ARTIFACT_SHARING_OS_PROJECT_DOMAIN_NAME
         - TROVI_URL
-      work_dir: "/work"
+      working_dir: "/work"
       notebook_dir: "/work"
-      http_timeout: 300
+      http_timeout: 1200
+      start_timeout: 1200
+
     ChameleonKeycloakAuthenticator:
       login_service: "Chameleon"
     GenericOAuthenticator:
@@ -109,6 +110,7 @@ hub:
       ]
   pdb:
     enabled: false
+  slug_scheme: "escape
 
 cull:
   enabled: true
