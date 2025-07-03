@@ -1,26 +1,22 @@
 singleuser:
   image:
-    tag: "sha-f3431f0"
+    tag: "sha-07b70bc"
     pullPolicy: "Always"
-    pullSecrets:
-      - name: image-pull-secret
   cloudMetadata:
     blockWithIptables: false
   extraEnv:
-    JUPYTERHUB_PUBLIC_URL: https://jupyter.chameleon.savanna.tacc.cloud
+    JUPYTERHUB_PUBLIC_URL: https://jupyter.dev.chameleon.savanna.tacc.cloud
 
 hub:
   image:
-    tag: "sha-d2fb699"
+    tag: "sha-994ad0d"
     pullPolicy: "Always"
-    pullSecrets:
-      - name: image-pull-secret
   config:
     ChameleonKeycloakAuthenticator:
       keystone_auth_url: "https://dev.uc.chameleoncloud.org:5000/v3"
       keystone_default_region_name: "CHI@UC"
     GenericOAuthenticator:
-      oauth_callback_url: "https://jupyter.chameleon.savanna.tacc.cloud/hub/oauth_callback"
+      oauth_callback_url: "https://jupyter.dev.chameleon.savanna.tacc.cloud/hub/oauth_callback"
       client_id: "jupyterhub-dev"
       authorize_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/auth"
       token_url: "https://auth.dev.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"

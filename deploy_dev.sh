@@ -8,7 +8,7 @@ helm repo update
 
 helm upgrade --cleanup-on-fail \
 	--install jupyter-dev jupyterhub/jupyterhub \
-	--namespace chameleon-jupyter \
+	--namespace chameleon-jupyter-dev \
 	--version=4.0.0 \
 	--values ./config/jupyterhub_config.yaml \
 	--values ./config/jupyterhub_secrets.yaml \

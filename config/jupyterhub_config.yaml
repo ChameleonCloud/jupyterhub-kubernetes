@@ -80,7 +80,6 @@ hub:
       notebook_dir: "/work"
       http_timeout: 1200
       start_timeout: 1200
-
     ChameleonKeycloakAuthenticator:
       login_service: "Chameleon"
     GenericOAuthenticator:
@@ -135,11 +134,10 @@ ingress:
   enabled: true
   ingressClassName: nginx
   hosts:
-  - jupyter.chameleoncloud.org
-    #- jupyter.chameleon.savanna.tacc.cloud
+  - jupyter.dev.chameleon.savanna.tacc.cloud
   tls:
     - hosts:
-      - jupyter.chameleoncloud.org
+      - jupyter.dev.chameleon.savanna.tacc.cloud
       secretName: certmanager-tls-chameleon-jupyterhub-prod-2
         #- hosts:
         #- jupyter.chameleon.savanna.tacc.cloud
