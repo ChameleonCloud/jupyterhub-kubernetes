@@ -1,9 +1,7 @@
 singleuser:
   image:
-    tag: "sha-21cd5c6"
+    tag: "sha-07b70bc"
     pullPolicy: "Always"
-    pullSecrets:
-      - name: image-pull-secret
   cloudMetadata:
     blockWithIptables: false
   extraEnv:
@@ -11,13 +9,8 @@ singleuser:
 
 hub:
   image:
-    tag: "sha-d2fb699"
+    tag: "sha-994ad0d"
     pullPolicy: "Always"
-    pullSecrets:
-      - name: image-pull-secret
-  db:
-    pvc:
-      storageClassName: "cinder-csi"
   config:
     ChameleonKeycloakAuthenticator:
       keystone_auth_url: "https://chi.uc.chameleoncloud.org:5000/v3"
@@ -34,5 +27,8 @@ hub:
     KEYCLOAK_CLIENT_ID: "jupyterhub-prod"
     KEYCLOAK_TOKEN_URL: "https://auth.chameleoncloud.org/auth/realms/chameleon/protocol/openid-connect/token"
     OAUTH_CLIENT_ID: "jupyterhub-prod"
+  db:
+    pvc:
+      storageClassName: "cinder-csi"
 debug:
   enabled: true

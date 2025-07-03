@@ -80,6 +80,7 @@ hub:
       notebook_dir: "/work"
       http_timeout: 1200
       start_timeout: 1200
+      slug_scheme: "escape"
     ChameleonKeycloakAuthenticator:
       login_service: "Chameleon"
     GenericOAuthenticator:
@@ -109,7 +110,6 @@ hub:
       ]
   pdb:
     enabled: false
-  slug_scheme: "escape
 
 cull:
   enabled: true
@@ -134,18 +134,14 @@ ingress:
   enabled: true
   ingressClassName: nginx
   hosts:
-  - jupyter.dev.chameleon.savanna.tacc.cloud
+    - jupyter.dev.chameleon.savanna.tacc.cloud
   tls:
     - hosts:
-      - jupyter.dev.chameleon.savanna.tacc.cloud
+        - jupyter.dev.chameleon.savanna.tacc.cloud
       secretName: certmanager-tls-chameleon-jupyterhub-prod-2
-        #- hosts:
-        #- jupyter.chameleon.savanna.tacc.cloud
-        #secretName: certmanager-tls-chameleon-jupyterhub-tacc
   annotations:
-      cert-manager.io/issuer: "letsencrypt"
-      kubernetes.io/ingress.class: "nginx"
-
+    cert-manager.io/issuer: "letsencrypt"
+    kubernetes.io/ingress.class: "nginx"
 
 proxy:
   chp:
@@ -153,14 +149,13 @@ proxy:
       enabled: false
     pdb:
       enabled: false
-  traefik:
-    networkPolicy:
-      enabled: false
   service:
     type: ClusterIP
   https:
     enabled: false
   traefik:
+    networkPolicy:
+      enabled: false
     extraInitContainers:
       # This startup delay can help the k8s container network interface setup
       # network routing of traffic to the pod, which is essential for the ACME
