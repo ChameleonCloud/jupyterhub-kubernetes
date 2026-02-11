@@ -134,10 +134,10 @@ ingress:
   enabled: true
   ingressClassName: nginx
   hosts:
-    - jupyter.dev.chameleon.savanna.tacc.cloud
+    - jupyter.chameleoncloud.org
   tls:
     - hosts:
-        - jupyter.dev.chameleon.savanna.tacc.cloud
+        - jupyter.chameleoncloud.org
       secretName: certmanager-tls-chameleon-jupyterhub-prod-2
   annotations:
     cert-manager.io/issuer: "letsencrypt"
