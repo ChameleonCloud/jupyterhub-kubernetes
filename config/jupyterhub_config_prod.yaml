@@ -1,6 +1,6 @@
 singleuser:
   image:
-    tag: "sha-7e9e231"
+    tag: "sha-41fc46f"
     pullPolicy: "Always"
   cloudMetadata:
     blockWithIptables: false
