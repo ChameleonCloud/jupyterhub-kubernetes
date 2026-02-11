@@ -1,6 +1,6 @@
 singleuser:
   image:
-    tag: "sha-41fc46f"
+    tag: "sha-4e269f9"
     pullPolicy: "Always"
   cloudMetadata:
     blockWithIptables: false
@@ -9,7 +9,7 @@ singleuser:
 
 hub:
   image:
-    tag: "sha-994ad0d"
+    tag: "sha-41fc46f"
     pullPolicy: "Always"
   config:
     ChameleonKeycloakAuthenticator:
