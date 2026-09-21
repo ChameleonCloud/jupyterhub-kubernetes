@@ -9,7 +9,7 @@ singleuser:
 
 hub:
   image:
-    tag: "sha-a943d86"
+    tag: "sha-1878736"
     pullPolicy: "Always"
   config:
     ChameleonKeycloakAuthenticator:
